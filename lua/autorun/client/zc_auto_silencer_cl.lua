@@ -1,4 +1,5 @@
 local frame
+local openIcon = Material("entities/zc_auto_silencer", "smooth mips")
 
 local function closeMenu()
 	local menu = frame
@@ -124,5 +125,44 @@ local function toggleMenu()
 	addRow(scroll, description, "Уведомлять об установке", "zc_auto_silencer_notify", "zc_toggle_notify",
 		"Показывать игроку сообщение в чате и звук при установке обвесов на выданное оружие.")
 end
+
+local function addCMenuButton(panel)
+	local button = vgui.Create("DButton", panel)
+	button:Dock(TOP)
+	button:DockMargin(0, 0, 0, 6)
+	button:SetTall(52)
+	button:SetText("")
+
+	button.Paint = function(self, w, h)
+		local bg = self:IsHovered() and Color(58, 70, 96, 255) or Color(40, 48, 66, 255)
+		draw.RoundedBox(6, 0, 0, w, h, bg)
+		draw.RoundedBox(6, 1, 1, w - 2, h - 2, Color(20, 24, 34, 160))
+
+		if openIcon and not openIcon:IsError() then
+			surface.SetDrawColor(255, 255, 255, 255)
+			surface.SetMaterial(openIcon)
+			surface.DrawTexturedRect(8, 8, 36, 36)
+		end
+
+		draw.SimpleText("Auto Silencer", "DermaDefaultBold", 52, 11, Color(245, 245, 250), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+		draw.SimpleText("Open silencer_open", "DermaDefault", 52, 26, Color(190, 200, 220), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+	end
+
+	button.DoClick = function()
+		RunConsoleCommand("silencer_open")
+	end
+end
+
+hook.Add("PopulateToolMenu", "zc_auto_silencer_cmenu", function()
+	spawnmenu.AddToolMenuOption("zc_auto_silencer", "settings", "zc_auto_silencer_open", "Auto Silencer", "", "", function(panel)
+		panel:ClearControls()
+		addCMenuButton(panel)
+	end)
+end)
+
+hook.Add("AddToolMenuTabs", "zc_auto_silencer_tabs", function()
+	spawnmenu.AddToolTab("zc_auto_silencer", "Auto Silencer", "entities/zc_auto_silencer")
+	spawnmenu.AddToolCategory("zc_auto_silencer", "settings", "Settings")
+end)
 
 concommand.Add("silencer_open", toggleMenu)

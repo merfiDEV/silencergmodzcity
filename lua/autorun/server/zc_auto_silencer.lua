@@ -79,7 +79,7 @@ local function getRandomMag(wep)
 
 	local candidates = {}
 	for _, att in pairs(magwell) do
-		if istable(att) and istring(att[1]) and string.find(att[1], "mag") then
+		if istable(att) and type(att[1]) == "string" and string.find(att[1], "mag") then
 			candidates[#candidates + 1] = att[1]
 		end
 	end

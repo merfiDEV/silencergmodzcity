@@ -1,0 +1,6 @@
+{
+  "title": "Z-City Random Attachments",
+  "type": "servercontent",
+  "tags": ["fun", "realism"],
+  "ignore": [".git/*", ".agents/*", "LICENSE", "icon.jpg", "workshop_icon.jpg", "*.gma"]
+}
