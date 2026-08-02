@@ -8,9 +8,9 @@ local function toggleMenu()
 	end
 
 	frame = vgui.Create("DFrame")
-	frame:SetTitle("Авто-глушитель")
-	frame:SetSize(320, 140)
-	frame:SetPos((ScrW() - 320) / 2, (ScrH() - 140) / 2)
+	frame:SetTitle("Авто-обвес")
+	frame:SetSize(320, 160)
+	frame:SetPos((ScrW() - 320) / 2, (ScrH() - 160) / 2)
 	frame:SetDraggable(true)
 	frame:SetSizable(false)
 	frame:ShowCloseButton(true)
@@ -27,6 +27,17 @@ local function toggleMenu()
 
 	check.OnChange = function(_, val)
 		net.Start("zc_toggle_silencer")
+		net.WriteBool(val)
+		net.SendToServer()
+	end
+
+	local checkSight = vgui.Create("DCheckBoxLabel", frame)
+	checkSight:SetText("Рандомный прицел при выдаче")
+	checkSight:SetPos(20, 55)
+	checkSight:SetValue(GetConVar("zc_auto_silencer_random_sight"):GetBool())
+
+	checkSight.OnChange = function(_, val)
+		net.Start("zc_toggle_sight")
 		net.WriteBool(val)
 		net.SendToServer()
 	end
