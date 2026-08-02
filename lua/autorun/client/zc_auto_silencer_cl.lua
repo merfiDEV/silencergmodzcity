@@ -153,6 +153,7 @@ local function addCMenuButton(panel)
 	end
 end
 
+--[[
 hook.Add("PopulateToolMenu", "zc_auto_silencer_cmenu", function()
 	spawnmenu.AddToolMenuOption("zc_auto_silencer", "settings", "zc_auto_silencer_open", "Auto Silencer", "", "", function(panel)
 		panel:ClearControls()
@@ -164,5 +165,6 @@ hook.Add("AddToolMenuTabs", "zc_auto_silencer_tabs", function()
 	spawnmenu.AddToolTab("zc_auto_silencer", "Auto Silencer", "entities/zc_auto_silencer")
 	spawnmenu.AddToolCategory("zc_auto_silencer", "settings", "Settings")
 end)
+]]
 
 concommand.Add("silencer_open", toggleMenu)
