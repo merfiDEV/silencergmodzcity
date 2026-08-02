@@ -9,7 +9,7 @@ local function toggleMenu()
 
 	frame = vgui.Create("DFrame")
 	frame:SetTitle("Авто-обвес")
-	frame:SetSize(320, 160)
+	frame:SetSize(320, 190)
 	frame:SetPos((ScrW() - 320) / 2, (ScrH() - 160) / 2)
 	frame:SetDraggable(true)
 	frame:SetSizable(false)
@@ -38,6 +38,17 @@ local function toggleMenu()
 
 	checkSight.OnChange = function(_, val)
 		net.Start("zc_toggle_sight")
+		net.WriteBool(val)
+		net.SendToServer()
+	end
+
+	local checkLaser = vgui.Create("DCheckBoxLabel", frame)
+	checkLaser:SetText("Рандомный лазер при выдаче")
+	checkLaser:SetPos(20, 85)
+	checkLaser:SetValue(GetConVar("zc_auto_silencer_random_laser"):GetBool())
+
+	checkLaser.OnChange = function(_, val)
+		net.Start("zc_toggle_laser")
 		net.WriteBool(val)
 		net.SendToServer()
 	end
